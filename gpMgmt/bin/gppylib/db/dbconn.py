@@ -165,14 +165,13 @@ def connect(dburl, utility=False, verbose=False,
     elif allowSystemTableMods is not None:
         raise Exception('allowSystemTableMods invalid: %s' % allowSystemTableMods)
 
-    # bypass pgdb.connect() and instead call pgdb._connect_
+    # bypass pgdb.connect() and instead call pgdb._connect
     # to avoid silly issues with : in ipv6 address names and the url string
     #
     dbbase   = dburl.pgdb
     dbhost   = dburl.pghost
     dbport   = int(dburl.pgport)
     dbopt    = options
-    dbtty    = "1"
     dbuser   = dburl.pguser
     dbpasswd = dburl.pgpass
     timeout  = dburl.timeout
@@ -202,7 +201,7 @@ def connect(dburl, utility=False, verbose=False,
 
     for i in range(retries):
         try:
-            cnx  = pgdb._connect_(cstr, dbhost, dbport, dbopt, dbtty, dbuser, dbpasswd)
+            cnx  = pgdb._connect(cstr, dbhost, dbport, dbopt, dbuser, dbpasswd)
             break
 
         except pgdb.InternalError, e:
@@ -214,7 +213,7 @@ def connect(dburl, utility=False, verbose=False,
     if cnx is None:
         raise ConnectionError('Failed to connect to %s' % dbbase)
 
-    conn = pgdb.pgdbCnx(cnx)
+    conn = pgdb.Connection(cnx)
 
     #by default, libpq will print WARNINGS to stdout
     if not verbose:

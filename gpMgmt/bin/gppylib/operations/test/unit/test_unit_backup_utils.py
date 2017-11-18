@@ -786,7 +786,7 @@ class BackupUtilsTestCase(GpTestCase):
 
     @patch('gppylib.operations.backup_utils.dbconn.execSQL')
     @patch('gppylib.operations.backup_utils.dbconn.connect')
-    @patch('pygresql.pgdb.pgdbCursor.fetchall', return_value=[['public', 'tl1'], ['public', 'tl2']])
+    @patch('pygresql.pgdb.Cursor.fetchall', return_value=[['public', 'tl1'], ['public', 'tl2']])
     def test_expand_partition_tables_default(self, mock1, mock2, mock3):
         self.context.target_db = 'foo'
         restore_tables = ['public.t1', 'public.t2']
@@ -796,7 +796,7 @@ class BackupUtilsTestCase(GpTestCase):
 
     @patch('gppylib.operations.backup_utils.dbconn.execSQL')
     @patch('gppylib.operations.backup_utils.dbconn.connect')
-    @patch('pygresql.pgdb.pgdbCursor.fetchall', return_value=[])
+    @patch('pygresql.pgdb.Cursor.fetchall', return_value=[])
     def test_expand_partition_tables_no_change(self, mock1, mock2, mock3):
         self.context.target_db = 'foo'
         restore_tables = ['public.t1', 'public.t2']

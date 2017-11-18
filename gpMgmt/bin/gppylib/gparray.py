@@ -1339,7 +1339,6 @@ class GpArray:
                   JOIN pg_catalog.pg_filespace fs on (fsefsoid = fs.oid)) fsloc
                   where db.dattablespace = ts.oid
                   and ts.spcfsoid = fsloc.oid''')
-        conn.close()
         catlocmap = {}
         for row in datcatloc:
             if catlocmap.has_key(row[0]):
@@ -1349,6 +1348,7 @@ class GpArray:
         for seg in segments:
             seg.catdirs = catlocmap[seg.dbid]
 
+        conn.close()
         origSegments = [seg.copy() for seg in segments]
 
         array = GpArray(segments, origSegments)

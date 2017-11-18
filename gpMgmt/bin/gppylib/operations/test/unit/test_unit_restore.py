@@ -887,7 +887,7 @@ CREATE DATABASE monkey WITH TEMPLATE = template0 ENCODING = 'UTF8' OWNER = thisg
 
     @patch('gppylib.operations.restore.escape_string', return_value='schema.table')
     @patch('gppylib.operations.restore.execSQLForSingleton')
-    @patch('pygresql.pgdb.pgdbCnx.commit')
+    @patch('pygresql.pgdb.Connection.commit')
     def test_update_ao_stat_func_default(self, m1, m2, m3):
         conn = None
         ao_schema = 'schema'
@@ -898,7 +898,7 @@ CREATE DATABASE monkey WITH TEMPLATE = template0 ENCODING = 'UTF8' OWNER = thisg
 
     @patch('gppylib.operations.restore.escape_string', return_value='schema.table')
     @patch('gppylib.operations.restore.execSQLForSingleton')
-    @patch('pygresql.pgdb.pgdbCnx.commit')
+    @patch('pygresql.pgdb.Connection.commit')
     def test_update_ao_stat_func_near_batch_size(self, m1, m2, m3):
         conn = None
         ao_table = 'table'
@@ -909,7 +909,7 @@ CREATE DATABASE monkey WITH TEMPLATE = template0 ENCODING = 'UTF8' OWNER = thisg
 
     @patch('gppylib.operations.restore.escape_string', return_value='schema.table')
     @patch('gppylib.operations.restore.execSQLForSingleton')
-    @patch('pygresql.pgdb.pgdbCnx.commit')
+    @patch('pygresql.pgdb.Connection.commit')
     def test_update_ao_stat_func_equal_batch_size(self, m1, m2, m3):
         conn = None
         ao_table = 'table'
@@ -921,7 +921,7 @@ CREATE DATABASE monkey WITH TEMPLATE = template0 ENCODING = 'UTF8' OWNER = thisg
 
     @patch('gppylib.operations.restore.escape_string', return_value='schema.table')
     @patch('gppylib.operations.restore.execSQLForSingleton')
-    @patch('pygresql.pgdb.pgdbCnx.commit')
+    @patch('pygresql.pgdb.Connection.commit')
     def test_update_ao_stat_func_over_batch_size(self, m1, m2, m3):
         conn = None
         ao_table = 'table'
@@ -932,7 +932,7 @@ CREATE DATABASE monkey WITH TEMPLATE = template0 ENCODING = 'UTF8' OWNER = thisg
 
     @patch('gppylib.operations.restore.escape_string', return_value='schema.table')
     @patch('gppylib.operations.restore.execSQLForSingleton')
-    @patch('pygresql.pgdb.pgdbCnx.commit')
+    @patch('pygresql.pgdb.Connection.commit')
     def test_update_ao_stat_func_double_batch_size(self, m1, m2, m3):
         conn = None
         ao_table = 'table'

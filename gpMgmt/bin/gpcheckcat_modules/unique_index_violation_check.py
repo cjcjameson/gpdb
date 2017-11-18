@@ -39,14 +39,14 @@ class UniqueIndexViolationCheck:
         violations = []
 
         for (table_oid, index_name, table_name, column_names) in unique_indexes:
-            column_names = column_names[1:-1]
-            sql = self.get_violated_segments_query(table_name, column_names)
+            column_names_string = ", ".join(column_names)
+            sql = self.get_violated_segments_query(table_name, column_names_string)
             violated_segments = db_connection.query(sql).getresult()
             if violated_segments:
                 violations.append(dict(table_oid=table_oid,
                                        table_name=table_name,
                                        index_name=index_name,
-                                       column_names=column_names,
+                                       column_names=column_names_string,
                                        violated_segments=[row[0] for row in violated_segments]))
 
         return violations

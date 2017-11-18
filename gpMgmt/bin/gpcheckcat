@@ -448,7 +448,7 @@ def getGPConfiguration():
           '''
     curs = db.query(qry)
     for row in curs.dictresult():
-        if row['content'] == -1 and row['isprimary'] != 't':
+        if row['content'] == -1 and row['isprimary'] != True:
             continue  # skip standby master
         cfg[row['dbid']] = row
     db.close()
@@ -4251,9 +4251,8 @@ class CatInconsistentIssue:
             if segids == '{NULL}':
                 idstr = 'all other segments'
             else:
-                ids = [int(i) for i in segids[1:-1].split(',')]
                 idstr = ''
-                for i in ids:
+                for i in segids:
                     idstr += '%s (%s:%d) ' % \
                              (GV.report_cfg[i]['segname'], GV.report_cfg[i]['hostname'],
                               GV.report_cfg[i]['port'])
@@ -4278,12 +4277,11 @@ class CatForeignKeyIssue:
 
     def report(self):
 
-        ids = [int(i) for i in self.segids[1:-1].split(',')]
         idstr = ''
-        if len(ids) == len(GV.report_cfg):
+        if len(self.segids) == len(GV.report_cfg):
             idstr = 'all segments'
         else:
-            for i in ids:
+            for i in self.segids:
                 idstr += '%s (%s:%d) ' % \
                          (GV.report_cfg[i]['segname'], GV.report_cfg[i]['hostname'],
                           GV.report_cfg[i]['port'])
@@ -4304,12 +4302,11 @@ class CatMissingIssue:
 
     def report(self):
 
-        ids = [int(i) for i in self.segids[1:-1].split(',')]
         idstr = ''
-        if len(ids) == len(GV.report_cfg):
+        if len(self.segids) == len(GV.report_cfg):
             idstr = 'all segments'
         else:
-            for i in ids:
+            for i in self.segids:
                 idstr += '%s (%s:%d) ' % \
                          (GV.report_cfg[i]['segname'], GV.report_cfg[i]['hostname'],
                           GV.report_cfg[i]['port'])
@@ -4812,7 +4809,7 @@ def checkcatReport():
                         for part_table in db.query(partition_leaves_sql).getresult():
                             GV.missing_attr_tables.append( (part_table[0], segids) )
                 for table, segids in sorted(GV.missing_attr_tables):
-                    for id in segids[1:-1].split(','):
+                    for id in segids:
                         myprint("        Table %s.%s.%s" % (GV.dbname, table, id))
                 myprint('')
 
@@ -4826,7 +4823,7 @@ def checkcatReport():
                         for part_table in db.query(partition_leaves_sql).getresult():
                             GV.extra_attr_tables.append( (part_table[0], segids) )
                 for table, segids in sorted(GV.extra_attr_tables):
-                    for id in segids[1:-1].split(','):
+                    for id in segids:
                         myprint("        Table %s.%s.%s" % (GV.dbname, table, id))
                 myprint('')
             myprint('')
